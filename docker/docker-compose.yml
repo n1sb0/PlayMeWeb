@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -8,11 +8,11 @@ services:
     ports:
       - 1433:1433
     volumes:
-      - ../database:/var/opt/mssql/database
-    enviroment:
+      - ../database:/var/opt/mssql/data
+    environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=${SQL_SA_PASSWORD}
-    command: sh -c "./initialize.sh -d ${SQL_DB_NAME} -p ${SQL_SA_PASSWORD} & /opt/mssql/bin/sqlservr"
+    command: sh -c "./initialize.sh -d ${SQL_DB_NAME} -p ${SQL_SA_PASSWORD} &  /opt/mssql/bin/sqlservr" 
 
   api:
     build: 
@@ -20,17 +20,17 @@ services:
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString:Default=server=db; database=${SQL_DB_NAME};user id='sa';password='${SQL_SA_PASSWORD}'; Integrated Security=false; Encrypt=True;TrustServerCertificate=True
+      - ConnectionStrings:Default=server=db; database=${SQL_DB_NAME};user id='sa';password='${SQL_SA_PASSWORD}'; Integrated Security=false; Encrypt=True;TrustServerCertificate=True
       - DOTNET_USE_POLLING_FILE_WATCHER 1
-    valumes:
-      - ../src/${API_NAME}:/app
+    volumes:
+      - ../src/${API_NAME}:/app      
     ports:
       - 5000:5000
     depends_on:
-      - db
-
+      - db        
+      
   app:
-    build:
+    build: 
       context: ./build/app
       dockerfile: Dockerfile
       args:
@@ -45,4 +45,5 @@ services:
     depends_on:
       - db
       - api
-    command: sh -c "yarn install && yarn dev"
+    command: sh -c "yarn install &&  yarn dev"
+
