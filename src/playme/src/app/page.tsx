@@ -1,21 +1,26 @@
-async function getNote() {  
-    const apiUrl = "http://api-server:5000/api/WeatherForecast/GetUsers";
-    const res = await fetch(apiUrl, { cache: 'no-store' });
-    const data = await res.json();
-    
-    console.log(apiUrl);
+const getUser = async(email : any) => {
+
+    const result = await fetch(process.env.BASE_API_URL + "Users",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email,
+        })
+    })
+
+    const data = await result.json();
     return data as any;
 }
 
 export default async function HomePage(){
-    const notes = await getNote();
-    console.log("b",notes);  
+    const user = await getUser("pippo@gmail.com");
 
     return (
         <div>
             <h1>Home Page</h1>
-            <p>Some content </p>
-            <p>Title: {notes.title}</p>
+            <p>Hi {user.email}</p>
         </div>
     )
 }
