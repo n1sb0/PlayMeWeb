@@ -1,7 +1,10 @@
-version: "3"
+version: "3.5"
 
 services:
   db:
+    container_name: db-server
+    networks:
+      - app-network
     build:
       context: ./build/db
       dockerfile: Dockerfile
@@ -15,6 +18,9 @@ services:
     command: sh -c "./initialize.sh -d ${SQL_DB_NAME} -p ${SQL_SA_PASSWORD} &  /opt/mssql/bin/sqlservr" 
 
   api:
+    container_name: api-server
+    networks:
+      - app-network
     build: 
       context: ./build/api
       dockerfile: Dockerfile
@@ -26,10 +32,15 @@ services:
       - ../src/${API_NAME}:/app      
     ports:
       - 5000:5000
+    links:
+      - db
     depends_on:
       - db        
-      
+    
   app:
+    container_name: app-server
+    networks:  
+      - app-network
     build: 
       context: ./build/app
       dockerfile: Dockerfile
@@ -45,5 +56,13 @@ services:
     depends_on:
       - db
       - api
-    command: sh -c "yarn install &&  yarn dev"
+    links:
+      - api
+      - db
+    extra_hosts:
+      - "myapp:127.0.0.1"
+    command: sh -c "npm install &&  npm run dev"
 
+networks:
+  app-network:
+    driver: bridge 
