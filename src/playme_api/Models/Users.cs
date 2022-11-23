@@ -1,18 +1,22 @@
-﻿namespace playme_api.Models
+﻿using System;
+
+using LinqToDB;
+using LinqToDB.Mapping;
+
+namespace playme_api.Models
 {
-    using System;
-    using LinqToDB.Mapping;
-
-
     [Table(Name = "Users")]
     public class Users
     {
-        //[Identity]
-        //public int id { get; set; }
-        [PrimaryKey]
-        public string email { get; set; }
+        [Identity, PrimaryKey]
+        public int id { get; set; }
         [Column]
-        public string password { get; set; }
-        public string name { get; set; }
+        public string? email { get; set; }
+        [Column]
+        public string? password { get; set; }
+        [Column]
+        public string? name { get; set; }
+        [Column]
+        public string? lastname { get; set; }
     }
 }
