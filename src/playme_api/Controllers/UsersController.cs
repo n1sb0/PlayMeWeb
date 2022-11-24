@@ -51,5 +51,21 @@ namespace playme_api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Users))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> GetUsers(int id)
+        {
+            try
+            {
+                var user = await _usersRepository.GetUser(id);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
