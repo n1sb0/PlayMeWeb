@@ -36,7 +36,7 @@ namespace playme_api.Controllers
         //    return list;
         //}
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Users))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers()
@@ -52,7 +52,7 @@ namespace playme_api.Controllers
             }
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Users))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("GetUser")]
         public async Task<IActionResult> GetUsers(int id)

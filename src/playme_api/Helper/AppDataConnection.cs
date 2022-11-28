@@ -11,7 +11,7 @@ namespace playme_api.Helper
         {
         }
 
-        public ITable<Users> Users => this.GetTable<Users>();
+        public ITable<User> Users => this.GetTable<User>();
 
     }
 }

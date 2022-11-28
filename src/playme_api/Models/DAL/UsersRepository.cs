@@ -17,29 +17,29 @@
         }
 
         //// Return a single User.
-        public async Task<Users> GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            //    //await using (_db)
-            //    //{
-            //    //    var query = from p in _db.Users
-            //    //                where p.id == id
-            //    //                select new Users
-            //    //                {
-            //    //                    id = p.id,
-            //    //                    name = p.name,
-            //    //                    lastname = p.lastname,
-            //    //                    email = p.email,
-            //    //                    password = p.password                     
-            //    //                };
-            //    //    return (Users)query;
-            //    //}
+            //await using (_db)
+            //{
+            //    var query = from p in _db.users
+            //                where p.id == id
+            //                select new users
+            //                {
+            //                    id = p.id,
+            //                    name = p.name,
+            //                    lastname = p.lastname,
+            //                    email = p.email,
+            //                    password = p.password
+            //                };
+            //    return (users)query;
+            //}
 
             var result = await _db.Users.Where(u => u.id == id).FirstOrDefaultAsync();
-            return result ?? new Users();
+            return result ?? new User();
         }
 
         // Return a list of all Users.
-        public async Task<List<Users>> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
             await using (_db)
             {
@@ -47,7 +47,7 @@
                             select p;
 
                 var result = query.ToList();
-                return result ?? new List<Users>();
+                return result ?? new List<User>();
             }
 
             //return await _db.Users.ToListAsync();

@@ -8,7 +8,7 @@ using LinqToDB.Mapping;
 namespace playme_api.Models
 {
     [Table(Name = "Users")]
-    public class Users
+    public class User
     {
         [Identity, PrimaryKey]
         public int id { get; set; }
