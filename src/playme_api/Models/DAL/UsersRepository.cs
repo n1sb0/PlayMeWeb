@@ -52,5 +52,30 @@
 
             //return await _db.Users.ToListAsync();
         }
+
+        public async Task<int> CreateUser(User user)
+        {
+            await using (_db)
+            {
+               var result = _db.Insert(user);
+               return result;
+            }
+        }
+
+        public async Task<int> UpdateUser(User user)
+        {
+            await using (_db)
+            {
+                var result = _db.Update(user);
+                return result;
+            }
+        }
+
+        //public async void DeleteUser(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+
     }
 }
