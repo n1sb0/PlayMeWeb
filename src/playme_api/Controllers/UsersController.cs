@@ -35,6 +35,7 @@ namespace playme_api.Controllers
             try
             {
                 //var users = await _usersRepository.GetUsers();
+                
                 var users = await _db.Users.ToListAsync();
                 return Ok(users);
             }

@@ -1,5 +1,7 @@
 ﻿namespace playme_api.Interfaces
 {
+    using System;
+
     using playme_api.Models;
 
     public interface IUsersRepository
