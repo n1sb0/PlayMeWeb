@@ -16,6 +16,6 @@
         public Task<int> UpdateUser(User user);
 
         //Delete a spesific User
-        public Task<int> DeleteUser(int id);
+        //public Task<int> DeleteUser(int id);
     }
 }

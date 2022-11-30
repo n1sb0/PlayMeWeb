@@ -14,59 +14,34 @@ namespace playme_api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly AppDataConnection _db;
-        private readonly IUsersRepository _usersRepository;
+        //private readonly IUsersRepository _usersRepository;
 
         //public UsersController(IUsersRepository usersRepository)
         //{
         //    _usersRepository = usersRepository;
         //}
 
-        public UsersController(AppDataConnection connection)
+        private readonly Linq2DbContext _db;
+        public UsersController(Linq2DbContext connection)
         {
             _db = connection;
         }
-
-
-        //private readonly AppDataConnection _connection;
-
-        //public UsersController(AppDataConnection connection)
-        //{
-        //    _connection = connection;
-        //}
-
-        //[HttpGet("ListPeople")]
-        //public Task<Users[]> ListPeople()
-        //{
-        //    var list = _connection.Users.ToArrayAsync();
-        //    return list;
-        //}
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {
-
-            //await using (_db)
-            //{
-            //    var query = from p in _db.Users
-            //                select p;
-
-            //    var result = query.ToList();
-            //    return result ?? new List<User>();
-            //}
-           
-            return Ok(await _db.Users.ToListAsync());
-            //try
-            //{
-            //    var users = await _usersRepository.GetUsers();
-            //    return Ok(users);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            //}
+            try
+            {
+                //var users = await _usersRepository.GetUsers();
+                var users = await _db.Users.ToListAsync();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
@@ -77,8 +52,8 @@ namespace playme_api.Controllers
             try
             {
                 var user = await _db.Users.FirstOrDefaultAsync(x => x.id == id);
-                
                 return user != null ? Ok(user) : NotFound(id) ;
+
                 //var user = await _usersRepository.GetUser(id);
                 //return Ok(user);
             }
@@ -115,9 +90,12 @@ namespace playme_api.Controllers
         {
             try
             {
-                int newUserId = await _usersRepository.UpdateUser(user);
-                user.id = newUserId;
-                return CreatedAtAction((nameof(GetUser)), new { id = newUserId }, user);
+                var userId = await _db.UpdateAsync(user);
+                return CreatedAtAction((nameof(GetUser)), new { id = userId }, user);
+
+                //int newUserId = await _usersRepository.UpdateUser(user);
+                //user.id = newUserId;
+                //return CreatedAtAction((nameof(GetUser)), new { id = newUserId }, user);
             }
             catch (Exception ex)
             {
@@ -125,21 +103,23 @@ namespace playme_api.Controllers
             }
         }
 
-
-        //[HttpDelete("DeleteUserById/{id}")]
-        //public async Task<IActionResult> DeleteUser(int id)
-        //{
-        //    try
-        //    {
-        //        _usersRepository.DeleteUserById(id);
-        //        return $"User with ID: {id} has been Deleted.";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return $"Cann't find User with id: {id}. Exception: {ex}";
-        //    }
-        //}
-
-
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpDelete("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                
+                var userId = await _db.Users.DeleteAsync(x => x.id == id);
+                //return CreatedAtAction((nameof(GetUser)), new {id = userId}, _db.Users.First(x => x.id == userId));
+                //_usersRepository.DeleteUserById(id);
+                return Ok($"User with ID: {id} has been Deleted.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

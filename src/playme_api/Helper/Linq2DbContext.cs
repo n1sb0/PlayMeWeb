@@ -5,9 +5,9 @@ using playme_api.Models;
 
 namespace playme_api.Helper
 {
-    public class AppDataConnection : DataConnection
+    public class Linq2DbContext : DataConnection
     {
-        public AppDataConnection(LinqToDBConnectionOptions<AppDataConnection> options): base(options)
+        public Linq2DbContext(LinqToDBConnectionOptions<Linq2DbContext> options): base(options)
         {
         }
 

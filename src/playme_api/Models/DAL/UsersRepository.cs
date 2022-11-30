@@ -9,9 +9,9 @@
 
     public class UsersRepository : IUsersRepository
     {
-        private readonly AppDataConnection _db;
+        private readonly Linq2DbContext _db;
 
-        public UsersRepository(AppDataConnection connection)
+        public UsersRepository(Linq2DbContext connection)
         {
             _db = connection;
         }
@@ -71,7 +71,7 @@
             }
         }
 
-        //public async void DeleteUser(int id)
+        //public async Task<int> DeleteUser(int id)
         //{
         //    throw new NotImplementedException();
         //}

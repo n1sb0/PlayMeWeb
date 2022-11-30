@@ -9,6 +9,9 @@ using playme_api.Models;
 using playme_api.Interfaces;
 using playme_api.Models.DAL;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,9 +33,13 @@ builder.Services.AddSwaggerGen(config =>
     config.CustomSchemaIds(x => x.FullName);
 });
 
+builder.Services.AddMvc(o =>
+{
+    o.Filters.Add(new ProducesResponseTypeAttribute(typeof(User), 200));
+});
 
 //Linq2Db Connection
-builder.Services.AddLinqToDBContext<AppDataConnection>((provider, options) => {
+builder.Services.AddLinqToDBContext<Linq2DbContext>((provider, options) => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")).UseDefaultLogging(provider);
 });
 
