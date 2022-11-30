@@ -1,5 +1,7 @@
 ﻿namespace playme_api.Interfaces
 {
+    using System;
+
     using playme_api.Models;
 
     public interface IUsersRepository
@@ -9,6 +11,6 @@
         //Return a single User
         public Task<User> GetUser(int id);
 
-        public Task<User> CreateUser(User);
+        //public Task<User> CreateUser(User);
     }
 }

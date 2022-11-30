@@ -44,6 +44,7 @@ namespace playme_api.Controllers
             try
             {
                 var users = await _usersRepository.GetUsers();
+
                 return Ok(users);
             }
             catch (Exception ex)
@@ -55,12 +56,13 @@ namespace playme_api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("GetUser")]
-        public async Task<IActionResult> GetUsers(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
             try
             {
                 var user = await _usersRepository.GetUser(id);
-                return Ok(user);
+
+                return (user is null || user.id == 0) ? NotFound() : Ok(user);
             }
             catch (Exception ex)
             {
