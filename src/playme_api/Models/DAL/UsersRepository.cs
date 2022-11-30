@@ -9,9 +9,9 @@
 
     public class UsersRepository : IUsersRepository
     {
-        private readonly AppDataConnection _db;
+        private readonly Linq2DbContext _db;
 
-        public UsersRepository(AppDataConnection connection)
+        public UsersRepository(Linq2DbContext connection)
         {
             _db = connection;
         }
@@ -52,5 +52,30 @@
 
             //return await _db.Users.ToListAsync();
         }
+
+        public async Task<int> CreateUser(User user)
+        {
+            await using (_db)
+            {
+               var result = _db.Insert(user);
+               return result;
+            }
+        }
+
+        public async Task<int> UpdateUser(User user)
+        {
+            await using (_db)
+            {
+                var result = _db.Update(user);
+                return result;
+            }
+        }
+
+        //public async Task<int> DeleteUser(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+
     }
 }

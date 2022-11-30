@@ -11,6 +11,13 @@
         //Return a single User
         public Task<User> GetUser(int id);
 
-        //public Task<User> CreateUser(User);
+        //Create new User
+        public Task<int> CreateUser(User user);
+
+        //Update existing User
+        public Task<int> UpdateUser(User user);
+
+        //Delete a spesific User
+        //public Task<int> DeleteUser(int id);
     }
 }
