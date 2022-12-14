@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 using LinqToDB;
 using LinqToDB.Mapping;
@@ -16,6 +15,9 @@ namespace playme_api.Models
         public int friendid { get; set; }
         [Column, NotNull]
         public DateTime created { get; set; } = DateTime.UtcNow;
+
+        //[Association(ThisKey = nameof(FriendShip.friendid), OtherKey = nameof(User.id))]
+        //public User? friend { get; set; }
 
     }
 }
