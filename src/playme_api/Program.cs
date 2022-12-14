@@ -33,10 +33,10 @@ builder.Services.AddSwaggerGen(config =>
     config.CustomSchemaIds(x => x.FullName);
 });
 
-builder.Services.AddMvc(o =>
-{
-    o.Filters.Add(new ProducesResponseTypeAttribute(typeof(User), 200));
-});
+//builder.Services.AddMvc(o =>
+//{
+//    o.Filters.Add(new ProducesResponseTypeAttribute(typeof(User), 200));
+//});
 
 //Linq2Db Connection
 builder.Services.AddLinqToDBContext<Linq2DbContext>((provider, options) => {

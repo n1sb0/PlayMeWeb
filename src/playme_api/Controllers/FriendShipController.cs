@@ -1,6 +1,7 @@
-﻿using LinqToDB;
+﻿using  LinqToDB;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 using playme_api.Helper;
 using playme_api.Models;
@@ -9,6 +10,7 @@ namespace playme_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiConventionType(typeof(ApiResponseTypeHelper))]
     public class FriendShipController : ControllerBase
     {
         private readonly Linq2DbContext _db;
@@ -17,8 +19,7 @@ namespace playme_api.Controllers
             _db = connection;
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FriendShip))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiConventionMethod(typeof(ApiResponseTypeHelper), nameof(ApiResponseTypeHelper.CreateFriendShip))]
         [HttpPost("CreateFriendShip")]
         public async Task<IActionResult> CreateFriendShip([FromBody] FriendShip friendShip)
         {
@@ -45,14 +46,16 @@ namespace playme_api.Controllers
             return (checkFriendShip1 || checkFriendShip2);
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FriendShip>))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost("GetFriends")]
-        public async Task<IActionResult> GetFriends([FromBody] int userid)
+        [ApiConventionMethod(typeof(ApiResponseTypeHelper), nameof(ApiResponseTypeHelper.ListFriends))]
+        [HttpGet("GetFriends/{userid}")]
+        public async Task<IActionResult> GetFriends(int userid)
         {
             try
             {
-                var userFriends = await _db.FriendShip.Where(f => f.userid == userid || f.friendid == userid).OrderBy(f => f.created).ToListAsync();
+                var userFriends = await (from p in _db.FriendShip.Where(f => f.userid == userid || f.friendid == userid)
+                                         from c in _db.Users.Where(q => q.id == ((p.userid != userid) ? p.userid : p.friendid))
+                                   select c).ToListAsync();
+                //var userFriends = await _db.FriendShip.Where(f => f.userid == userid || f.friendid == userid).OrderBy(f => f.created).ToListAsync();
 
                 return userFriends != null ? Ok(userFriends) : BadRequest(userid);
             }
@@ -62,16 +65,17 @@ namespace playme_api.Controllers
             }
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FriendShip>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FriendShip))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("DeleteFriend")]
-        public async Task<IActionResult> DeleteFriend([FromBody] FriendShip friendShip)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpDelete("DeleteFriendShip")]
+        public async Task<IActionResult> DeleteFriendShip([FromBody] FriendShip friendShip)
         {
             try
             {
                 var result = await _db.FriendShip.DeleteAsync(f => (f.userid == friendShip.userid && f.friendid == friendShip.friendid) || (f.friendid == friendShip.userid && f.userid == friendShip.friendid));
 
-                return result == 1 ? Ok(result) : BadRequest(friendShip);
+                return result == 1 ? Ok(friendShip) : BadRequest(friendShip);
             }
             catch (Exception ex)
             {
