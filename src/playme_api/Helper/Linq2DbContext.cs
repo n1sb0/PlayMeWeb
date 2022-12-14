@@ -9,9 +9,11 @@ namespace playme_api.Helper
     {
         public Linq2DbContext(LinqToDBConnectionOptions<Linq2DbContext> options): base(options)
         {
+            (this as IDataContext).CloseAfterUse = true;
         }
 
         public ITable<User> Users => this.GetTable<User>();
+        public ITable<FriendShip> FriendShip => this.GetTable<FriendShip>();
 
     }
 }

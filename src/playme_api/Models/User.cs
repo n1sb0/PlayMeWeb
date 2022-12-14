@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-using LinqToDB;
+﻿using LinqToDB;
 using LinqToDB.Mapping;
 
 namespace playme_api.Models
@@ -14,7 +10,7 @@ namespace playme_api.Models
         public int id { get; set; }
         [Column]
         public string? email { get; set; }
-        [Column, PasswordPropertyText]
+        [Column]
         public string? password { get; set; }
         [Column, NotNull]
         public string? name { get; set; }

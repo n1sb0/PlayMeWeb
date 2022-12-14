@@ -27,7 +27,7 @@ namespace playme_api.Controllers
             _db = connection;
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<User>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers()
@@ -104,7 +104,7 @@ namespace playme_api.Controllers
             }
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("DeleteUser/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -112,10 +112,10 @@ namespace playme_api.Controllers
             try
             {
                 
-                var userId = await _db.Users.DeleteAsync(x => x.id == id);
+                var result = await _db.Users.DeleteAsync(x => x.id == id);
                 //return CreatedAtAction((nameof(GetUser)), new {id = userId}, _db.Users.First(x => x.id == userId));
                 //_usersRepository.DeleteUserById(id);
-                return Ok($"User with ID: {id} has been Deleted.");
+                return result == 1 ? Ok() : BadRequest(id);
             }
             catch (Exception ex)
             {
