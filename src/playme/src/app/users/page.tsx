@@ -1,6 +1,7 @@
 import Link from "next/link";
-import User from "../../components/Features/User";
-import UsersList from "../../components/Features/UsersList";
+import Divider from "../../components/Features/Basic/Divider";
+import User from "../../components/Features/User/User";
+import UsersList from "../../components/Features/User/UsersList";
 
 const getUsers = async () => {
   const apiUrl = process.env.BASE_API_URL + "Users/GetUsers";
@@ -15,9 +16,9 @@ export default async function UsersPage() {
 
   return (
     <div>
-      <h1 className="mb-3 text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+      <h1 className="text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
         Users
-      </h1>
+      </h1>   
       <UsersList key={users.id} users={users}/>
     </div>
   );
