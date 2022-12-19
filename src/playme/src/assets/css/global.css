@@ -1,3 +1,43 @@
+@import-normalize;
+@tailwind base;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@layer components {
+  .sidebar-icon {
+    @apply relative mx-auto mt-2 mb-2 
+      flex h-12 w-12 cursor-pointer items-center  
+    justify-center rounded-3xl bg-gray-400 
+    text-green-500 shadow-lg
+      transition-all duration-300
+      ease-linear hover:rounded-xl hover:bg-green-600
+      hover:text-white dark:bg-gray-800;
+  }
+}
+
+.sidebar-tooltip {
+  @apply absolute left-14 m-2 w-auto min-w-max origin-left scale-0 rounded-md
+    bg-gray-900 p-2 
+    text-xs font-bold 
+    text-white shadow-md transition-all duration-100;
+}
+
+.sidebar-hr {
+  @apply mx-2 rounded-full 
+    border border-gray-200 bg-gray-200 dark:border-gray-800
+    dark:bg-gray-800;
+}
+
+.content-container {
+  @apply m-0 ml-16 overflow-hidden bg-gray-200
+     dark:bg-gray-800;
+}
