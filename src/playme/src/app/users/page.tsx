@@ -1,6 +1,8 @@
-import Link from "next/link";
-import Divider from "../../components/Features/Basic/Divider";
-import User from "../../components/Features/User/User";
+"use client"
+
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import UsersList from "../../components/Features/User/UsersList";
 
 const getUsers = async () => {
@@ -18,8 +20,8 @@ export default async function UsersPage() {
     <div>
       <h1 className="text-3xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
         Users
-      </h1>   
-      <UsersList key={users.id} users={users}/>
+      </h1>
+      <UsersList key={users.id} users={users} />
     </div>
   );
 }
