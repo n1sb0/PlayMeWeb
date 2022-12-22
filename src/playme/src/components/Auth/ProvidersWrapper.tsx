@@ -1,6 +1,4 @@
-"use client"
-import { SessionProvider } from "next-auth/react"
-
+import { SessionProvider } from "next-auth/react";
 
 export default function ProvidersWrapper({
   children,
@@ -9,7 +7,8 @@ export default function ProvidersWrapper({
 }) {
   return (
     <SessionProvider>
-      {children} {/* {children} Our entire app. Allows to have our app to use NextAuth */}
+      {children}
+      {/* {children} Our entire app. Allows to have our app to use NextAuth */}
     </SessionProvider>
   );
 }
