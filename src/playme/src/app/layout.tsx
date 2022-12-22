@@ -1,5 +1,4 @@
-'use client'
-/* eslint-disable @next/next/no-head-element */
+"use client";
 import "../assets/css/global.css";
 
 // components
@@ -21,12 +20,14 @@ export default function RootLayout({
           <main>
             {/* <Header/> */}
             <div className=" text-gray-200 dark:bg-slate-800 dark:text-gray-200 sm:text-center">
-              <SideBar />
-              <div className="content-container">
-                <div className="grid h-screen place-items-center">
-                  <ProvidersWrapper>{children}</ProvidersWrapper>
+              <ProvidersWrapper>
+                <SideBar />
+                <div className="content-container">
+                  <div className="grid h-screen place-items-center">
+                    {children}
+                  </div>
                 </div>
-              </div>
+              </ProvidersWrapper>
             </div>
           </main>
           {/* <Footer /> */}
