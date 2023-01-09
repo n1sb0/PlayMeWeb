@@ -1,7 +1,5 @@
 import { signOut, useSession } from "next-auth/react";
-import { BsPlus, BsFillLightningFill, BsGearFill } from "react-icons/bs";
 import { FaHome, FaSignOutAlt, FaUserFriends } from "react-icons/fa";
-import { text } from "stream/consumers";
 import Divider from "../Features/Basic/Divider";
 
 const SideBar = () => {

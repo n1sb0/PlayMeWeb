@@ -1,9 +1,4 @@
-import { useSession } from "next-auth/react";
 import UsersList from "../../components/Features/User/UsersList";
-import { use } from "react";
-import { decode, JWTDecodeParams } from "next-auth/jwt";
-import { cookies, headers } from "next/headers"
-import { RequestCookie } from "next/dist/server/web/spec-extension/cookies/types";
 import {getSessionToken} from "../../components/Auth/AuthHelper"
 import HomePage from "../page";
 
