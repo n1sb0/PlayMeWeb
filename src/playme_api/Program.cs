@@ -24,6 +24,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 // Add services to the container.
 builder.Services.AddControllers();
+//builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -33,15 +34,21 @@ builder.Services.AddSwaggerGen(config =>
     config.CustomSchemaIds(x => x.FullName);
 });
 
+
+
 //builder.Services.AddMvc(o =>
 //{
 //    o.Filters.Add(new ProducesResponseTypeAttribute(typeof(User), 200));
 //});
 
+//Cors
+builder.Services.AddCors(options => options.AddPolicy("Policy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
 //Linq2Db Connection
 builder.Services.AddLinqToDBContext<Linq2DbContext>((provider, options) => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")).UseDefaultLogging(provider);
 });
+
 
 var app = builder.Build();
 
@@ -55,6 +62,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("Policy");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -9,17 +9,22 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "@tanstack/react-query": "^4.10.0",
     "@trpc/client": "10.0.0-rc.4",
     "@trpc/next": "10.0.0-rc.4",
     "@trpc/react-query": "10.0.0-rc.4",
     "@trpc/server": "10.0.0-rc.4",
+    "cors": "^2.8.5",
     "next": "13.0.2",
     "next-auth": "^4.18.6",
+    "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.41.0",
     "react-icons": "^4.7.1",
     "superjson": "1.9.1",
+    "yup": "^0.32.11",
     "zod": "^3.18.0"
   },
   "devDependencies": {

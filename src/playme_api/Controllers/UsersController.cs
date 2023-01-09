@@ -72,7 +72,7 @@ namespace playme_api.Controllers
             try
             {
                 var userId = await _db.InsertAsync(user);
-                return CreatedAtAction((nameof(GetUser)), _db.Users.First(x => x.id == userId));
+                return CreatedAtAction((nameof(GetUser)), new { id = userId }, user);
 
                 //int newUserId = await _usersRepository.CreateUser(user);
                 //user.id = newUserId;
