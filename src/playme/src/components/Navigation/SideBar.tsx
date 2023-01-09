@@ -1,4 +1,5 @@
 import { signOut, useSession } from "next-auth/react";
+import React from "react";
 import { FaHome, FaSignOutAlt, FaUserFriends } from "react-icons/fa";
 import Divider from "../Features/Basic/Divider";
 

@@ -4,7 +4,7 @@ import {useForm} from 'react-hook-form'
 import * as Yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
-import HomePage from "../../../app/page";
+import React from "react";
 
 export default function CreateUser(){
   let password : string;
@@ -48,8 +48,6 @@ export default function CreateUser(){
   };
 
   const createNewUser = async () => {
-    // const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL + "Users/CreateUser";
-    console.log('user',user);
     const apiUrl =  process.env.NEXT_PUBLIC_BASE_API_URL + "Users/CreateUser";
     const result = await fetch(apiUrl , { 
       method: 'POST',
@@ -61,7 +59,6 @@ export default function CreateUser(){
     }).catch(err =>{
       console.log(err);
     });
-    // router.push(`/`);
     router.refresh();
   }
 
