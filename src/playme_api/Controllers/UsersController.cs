@@ -71,6 +71,13 @@ namespace playme_api.Controllers
         {
             try
             {
+                var userCheck = await _db.Users.FirstOrDefaultAsync(x => x.email == user.email);
+
+                if(userCheck != null && userCheck.email != null)
+                {
+                    return BadRequest(user);
+                }
+
                 var userId = await _db.InsertAsync(user);
                 return CreatedAtAction((nameof(GetUser)), new { id = userId }, user);
 
