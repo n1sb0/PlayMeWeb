@@ -1,5 +1,5 @@
 "use client";
-import "../assets/css/global.css";
+import "../assets/css/globals.css";
 
 // components
 // import Footer from "../components/Navigation/Footer";

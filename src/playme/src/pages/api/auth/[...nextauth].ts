@@ -1,7 +1,18 @@
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-export default NextAuth({
+import { env } from "../../../env/server.mjs";
+
+export const authOptions: NextAuthOptions = {
+  // Include user.id on session
+  callbacks: {
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -10,11 +21,10 @@ export default NextAuth({
     })
     // ...add more providers here
   ],
-  callbacks: {
-  },
   secret: process.env.JWT_SECRET as string,
   jwt:{
     maxAge: 60 * 60 * 24 * 30,
   }
-  // A database is optional, but required to persist accounts in a database
-});
+};
+
+export default NextAuth(authOptions);
