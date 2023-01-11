@@ -26,7 +26,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:Default=server=db; database=${SQL_DB_NAME};user id='sa';password='${SQL_SA_PASSWORD}'; Integrated Security=false; Encrypt=True;TrustServerCertificate=True
+      - ConnectionStrings__SqlConnection=server=${SQL_SERVER_NAME}; database=${SQL_DB_NAME};user id='sa';password='${SQL_SA_PASSWORD}'; Integrated Security=false; Encrypt=True;TrustServerCertificate=True
       - DOTNET_USE_POLLING_FILE_WATCHER 1
     volumes:
       - ../src/${API_NAME}:/app      
