@@ -27,9 +27,6 @@ export default function Login() {
 
   return (
     <>
-      {status === "authenticated" ? (
-        <UserCard user={session?.user} />
-      ) : (
         <section>
         <div className="section-form-div">
             <a href="/" className="form-title-with-image">
@@ -53,7 +50,7 @@ export default function Login() {
                         <button type="submit" className="login-button">LOGIN</button>
 
                         <p className="form-sub-text">
-                          Need to create an account? <a href="./createuser" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Create now...</a>
+                          Need to create an account? <a href="./register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Create now...</a>
                         </p>
 
                         <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
@@ -68,7 +65,6 @@ export default function Login() {
             </div>
         </div>
       </section>
-      )}
     </>
   );
 }

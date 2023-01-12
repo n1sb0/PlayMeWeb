@@ -1,6 +1,6 @@
 "use client";
-import "../assets/css/globals.css";
 
+import "../assets/css/globals.css";
 import SideBar from "../components/Navigation/SideBar";
 import ProvidersWrapper from "../components/Auth/ProvidersWrapper";
 
