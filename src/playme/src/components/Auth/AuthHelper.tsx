@@ -1,57 +1,42 @@
-import { Session } from "next-auth";
-import { decode } from "next-auth/jwt";
-import { getSession } from "next-auth/react";
-import { cookies, headers } from "next/headers";
+import crypto from 'crypto';
 
-const getSessionToken = async () => {
-  const rawToken = cookies().get("next-auth.session-token")?.value;
-
-  const token = await decode({
-    token: rawToken as unknown as string,
-    secret: process.env.JWT_SECRET as string,
-  });
-
-  return token as any;
+const loginUser = async (email : string, password : string) => {
+  try{
+    const apiUrl = process.env.BASE_API_URL + `Users/GetUserByEmail/${email}`;
+    const result = await fetch(apiUrl, { cache: "no-store" });
+    const user = await result.json();
+    if(!user){
+      return {error: "email or password does not match our records"}
+    }
+  
+    const matched = await validatePassword(user, password)
+    if(!matched){
+      return {error: "email or password does not match our records"}
+    }
+  
+    return {user : {user}}
+  }catch(error){
+    return {error: "Something went wrong, please try again"}
+  }
 }
 
-// export async function getSession(cookie: string): Promise<Session | null> {
-//   const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
-//     headers: { cookie },
-//   });
+const getSalt = async () => {
+  return (crypto.randomBytes(16)).toString('hex');
+}
 
-//   if (!response?.ok) {
-//     return null;
-//   }
+const getHashedPassword = async (password : string, salt : string) => {
+  return crypto
+        .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
+        .toString('hex');
+}
 
-//   const session = await response.json();
-//   return Object.keys(session).length > 0 ? session : null;
-// }
+const validatePassword = async (user : any, inputPassword : string) =>{
+  const inputHash = crypto
+      .pbkdf2Sync(inputPassword, user.salt, 1000, 64, 'sha512')
+      .toString('hex');    
+  const passwordsMatch = user.hashed_password === inputHash;
+  console.log(passwordsMatch)
+  return passwordsMatch;
+}
 
-// const isAuth = async () => {
-//   const cookie = headers().get("cookie");
-//   if (!cookie) return false;
-
-//   const session = await getSession(cookie);
-//   return !!session?.user;
-// }
-
-
-// export function getToken() {
-//   return cookies().get("next-auth.session-token")?.value;
-// }
-
-// export function getCsrfToken() {
-//   return cookies().get("next-auth.csrf-token")?.value;
-// }
-
-// export function getCallbackUrl() {
-//   const callbackUrl = cookies().get("next-auth.callback-url")?.value;
-//   if (!callbackUrl) return;
-
-//   const decodedUrl = decodeURIComponent(callbackUrl);
-//   const { searchParams } = new URL(decodedUrl);
-
-//   return searchParams.get("callbackUrl") ?? decodedUrl;
-// }
-
-export {getSessionToken}
+export { loginUser, getSalt, getHashedPassword };

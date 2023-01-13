@@ -3,42 +3,32 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import React from "react";
 import { useState } from "react";
-import Divider from "../Features/Basic/Divider";
-import { UserCard } from "./UserCard";
 
 export default function Login() {
   const { data: session, status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const login = async() => {
-    const apiUrl = process.env.BASE_API_URL + `Users/Login`;
-    const result = await fetch(apiUrl , { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    });
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+
+    const res = await signIn('credentials', {
+      email: email,
+      password: password
+    })
   }
 
   return (
     <>
         <section>
         <div className="section-form-div">
-            <a href="/" className="form-title-with-image">
-                <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-                PlayMe   
+            <img className="w-14 h-14 m-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
+            <a className="form-title-with-image">
+              Sign in to PlayMe
             </a>
             <div className="form-container form-width-fifty">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 className="form-title">
-                        Create and account
-                    </h1>
-                    <form className="form-spaces" onSubmit={login}>
+                    <form className="form-spaces" onSubmit={(e) => handleSubmit(e)}>
                         <div>
                             <label className="lable-text-form">Email</label>
                             <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="form-input" placeholder="playme@company.com" required={true}/>
@@ -47,7 +37,7 @@ export default function Login() {
                             <label className="lable-text-form">Password</label>
                             <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="••••••••" className="form-input" required={true}/>
                         </div>
-                        <button type="submit" className="login-button">LOGIN</button>
+                        <button className="login-button" type="submit">LOGIN</button>
 
                         <p className="form-sub-text">
                           Need to create an account? <a href="./register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Create now...</a>
@@ -57,7 +47,7 @@ export default function Login() {
                           <p className="text-center font-semibold mx-4 mb-0">OR</p>
                         </div>
 
-                        <button type="button" className="blue-button" onClick={() => signIn()}>
+                        <button type="button" className="blue-button" onClick={() => signIn('google')}>
                           Sign in with Google
                         </button>
                     </form>
