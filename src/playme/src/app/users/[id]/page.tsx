@@ -6,8 +6,6 @@ async function getUser(userId: number) {
   const apiUrl = process.env.BASE_API_URL + `Users/GetUser/${userId}`;
   const result = await fetch(apiUrl, { cache: "no-store" });
 
-  console.log("user", apiUrl);
-
   const data = await result.json();
   return data as any;
 }
