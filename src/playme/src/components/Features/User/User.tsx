@@ -1,5 +1,5 @@
 const User = ({ user }: any) => {
-    const { id, email, name, lastname, password } = user || {};
+    const { id, email, name, lastname } = user || {};
   
     return (
       <div className="">
