@@ -1,21 +1,26 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import React from "react";
 import { useState } from "react";
 
 export default function Login() {
-  const { data: session, status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) =>{
+  const handleCredentialsSubmit = async (e) =>{
     e.preventDefault();
 
     const res = await signIn('credentials', {
       email: email,
       password: password
     })
+  }
+
+  const handleGooglesSubmit = async (e) =>{
+    e.preventDefault();
+
+    const res = await signIn('google')
   }
 
   return (
@@ -28,7 +33,7 @@ export default function Login() {
             </a>
             <div className="form-container form-width-fifty">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <form className="form-spaces" onSubmit={(e) => handleSubmit(e)}>
+                    <form className="form-spaces" onSubmit={(e) => handleCredentialsSubmit(e)}>
                         <div>
                             <label className="lable-text-form">Email</label>
                             <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" className="form-input" placeholder="playme@company.com" required={true}/>
@@ -47,7 +52,7 @@ export default function Login() {
                           <p className="text-center font-semibold mx-4 mb-0">OR</p>
                         </div>
 
-                        <button type="button" className="blue-button" onClick={() => signIn('google')}>
+                        <button type="button" className="blue-button" onClick={(e) => handleGooglesSubmit(e)}>
                           Sign in with Google
                         </button>
                     </form>

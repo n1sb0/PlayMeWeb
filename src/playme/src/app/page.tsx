@@ -1,15 +1,49 @@
-import { UserCard } from "../components/Auth/UserCard";
-import { getSessionToken } from "../components/Auth/AuthHelper";
-import { NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { decode } from "next-auth/jwt";
+import { getUserByEmail } from "../components/Auth/AuthHelper";
+import UserCard from '../components/Features/User/UserCard';
+import { getSession } from 'next-auth/react'
+
+
+const getUserSessionData = async () =>{
+  const nextCookies = cookies();
+  const rawToken = nextCookies.get('next-auth.session-token')?.value;
+
+  const session = await decode({
+    token: rawToken as unknown as string,
+    secret: process.env.JWT_SECRET as string,
+  });
+
+  return session;
+}
+
+async function getUserByEmailFromSession() {
+
+  const session = await getUserSessionData();
+
+  console.log('session Home Page',session)
+  let user : any;
+
+  const userEmailFormSession = session?.user !== undefined && session.user.email ? session.user.email : session?.email;
+
+  if(userEmailFormSession){
+    user = await getUserByEmail(userEmailFormSession);
+  }
+
+  return user as any;
+}
 
 export default async function HomePage() {
-  // const session = await getSessionToken();
+  const session = await getSession();
+
+  console.log('home page use sesstion',session);
+  const user = await getUserByEmailFromSession();
   
   return (
     <div className="content-center">
       <div className="grid place-items-center">
-        <p>HELLO</p>
-        {/* <UserCard user={session?.user} /> */}
+        <p>HELLO {user?.email}</p>
+        <UserCard key={user?.id} user={user} />
       </div>
     </div>
   );

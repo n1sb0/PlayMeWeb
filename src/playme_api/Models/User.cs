@@ -15,7 +15,7 @@ namespace playme_api.Models
         [Column]
         public string? email { get; set; }
         [Column]
-        public DateTime? email_verified { get; set; }
+        public bool? email_verified { get; set; }
         [Column]
         public string? hashed_password { get; set; }
         [Column]
