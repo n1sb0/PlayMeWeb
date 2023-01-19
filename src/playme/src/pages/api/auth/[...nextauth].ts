@@ -1,7 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { loginUser } from "../../../components/Auth/AuthHelper";
+import { loginUser, createUserFromProvider } from "../../../components/Auth/AuthHelper";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,9 +14,8 @@ export const authOptions: NextAuthOptions = {
         try {  
           const { email, password } = credentials as {email : string, password : string};
           const { user, error } = await loginUser(email, password);
-               console.log(user)
-               console.log(error)
           if (error) throw new Error(error);
+
           return user;
         } catch (error) {
           return null;
@@ -29,13 +28,39 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
+  callbacks: {
+    async signIn({ account, profile }) {
+
+      if (account?.provider === "google") {
+        createUserFromProvider(profile);
+      }
+      
+      return true // do other things for other providers
+    },
+    session: async (session: any, token: any, user) => {
+      console.log("sess, tol", session, token);
+      user && (token.user = user)
+      console.log('usss',user)
+      return Promise.resolve({
+        ...session,
+        ...session.user,
+        ...token
+      });
+    },
+    jwt: async (token: any, user) => {
+      console.log('user s', user);
+      if (user) token.user = user;
+      let newSession = {
+        ...token.user
+      };
+
+      return Promise.resolve(newSession);
+    }
+  },
   pages:{
     signIn: "/login"
   },
   secret: process.env.JWT_SECRET as string,
-  jwt: {
-    maxAge: 60 * 60 * 24 * 30,
-  },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days

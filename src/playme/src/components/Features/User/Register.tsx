@@ -5,8 +5,9 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { createNewUser } from "../../Auth/AuthHelper";
 
-import { getSalt, getHashedPassword } from "../../Auth/AuthHelper"
+
 
 export default function CreateUser() {
   let password: string;
@@ -45,36 +46,27 @@ export default function CreateUser() {
   password = watch("password", "");
   email = watch("email", "");
 
-  const createNewUser = async (event) => {
+  //Submit
+  const submitUser = async (event) => {
     event.preventDefault();
 
-    const salt = (await getSalt()).toString();
-    const hashed_password = await getHashedPassword(password, salt);
-    
-    const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL + "Users/CreateUser";
-    const result = await fetch(apiUrl, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        lastname: lastname,
-        email: email,
-        hashed_password: hashed_password,
-        salt: salt,
-      }),
-    }).catch((err) => {
-      console.log(err);
-    });
+    const hashed_password = password;
+    const user = {name, lastname, email, hashed_password};
+    const result = await createNewUser(user);
 
-    if (result.ok) {
-      router.push("/");
-    }
+    if (result.ok)
+    router.push("/");
 
     setUnTakenEmail(result.ok);
   };
+
+  //Error Email Message
+  const emailErrorMessage = () =>{
+    if(!unTakenEmail)
+    setUnTakenEmail(true);
+
+    return errors.email?.message as any;
+  }
 
   return (
     <section>
@@ -104,7 +96,7 @@ export default function CreateUser() {
                 <p className="alerts">
                   {errors.email?.message === undefined && !unTakenEmail
                     ? "This email already taken"
-                    : (errors.email?.message as any)}
+                    : emailErrorMessage()}
                 </p>
               </div>
               <div>
@@ -177,7 +169,7 @@ export default function CreateUser() {
                 </div>
               </div>
               <button
-                onClick={(e) => createNewUser(e)}
+                onClick={(e) => submitUser(e)}
                 className="login-button"
               >
                 Create an account
