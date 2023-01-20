@@ -8,7 +8,7 @@ import { getSession } from 'next-auth/react'
 const getUserSessionData = async () =>{
   const nextCookies = cookies();
   const rawToken = nextCookies.get('next-auth.session-token')?.value;
-
+  console.log('session Home Page raw',rawToken)
   const session = await decode({
     token: rawToken as unknown as string,
     secret: process.env.JWT_SECRET as string,
@@ -21,7 +21,6 @@ async function getUserByEmailFromSession() {
 
   const session = await getUserSessionData();
 
-  console.log('session Home Page',session)
   let user : any;
 
   const userEmailFormSession = session?.user !== undefined && session.user.email ? session.user.email : session?.email;
@@ -34,9 +33,7 @@ async function getUserByEmailFromSession() {
 }
 
 export default async function HomePage() {
-  const session = await getSession();
 
-  console.log('home page use sesstion',session);
   const user = await getUserByEmailFromSession();
   
   return (

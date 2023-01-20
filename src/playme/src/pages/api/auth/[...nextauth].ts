@@ -13,6 +13,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         try {  
           const { email, password } = credentials as {email : string, password : string};
+          //check user credentials
           const { user, error } = await loginUser(email, password);
           if (error) throw new Error(error);
 
@@ -32,29 +33,19 @@ export const authOptions: NextAuthOptions = {
     async signIn({ account, profile }) {
 
       if (account?.provider === "google") {
+        //create new user account if not exist
         createUserFromProvider(profile);
       }
       
       return true // do other things for other providers
     },
-    session: async (session: any, token: any, user) => {
-      console.log("sess, tol", session, token);
-      user && (token.user = user)
-      console.log('usss',user)
-      return Promise.resolve({
-        ...session,
-        ...session.user,
-        ...token
-      });
+    async jwt({token, user, account, profile, isNewUser}) {
+      //just return already created token
+      return token
     },
-    jwt: async (token: any, user) => {
-      console.log('user s', user);
-      if (user) token.user = user;
-      let newSession = {
-        ...token.user
-      };
-
-      return Promise.resolve(newSession);
+    async session({session, token, user}) {    
+      //just return already created session
+      return session
     }
   },
   pages:{
