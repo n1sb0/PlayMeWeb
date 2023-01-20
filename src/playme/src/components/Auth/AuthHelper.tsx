@@ -13,7 +13,7 @@ const loginUser = async (email : string, password : string) => {
       return {error: "email or password does not match our records"}
     }
   
-    return {user : {user}}
+    return {user};
   }catch(error){
     return {error: "Something went wrong, please try again"}
   }
