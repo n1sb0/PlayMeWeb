@@ -3,25 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 export const middleware = async (req: NextRequest) => {
   const { cookies, nextUrl } = req;
 
-  const isAuthenticated = cookies.get("next-auth.session-token");
+  const isAuthenticated = cookies.get("next-auth.session-token") ?? cookies.get("__Secure-next-auth.session-token");
 
   const pathname = nextUrl.pathname;
 
-  if (!isAuthenticated) {
+  console.log("auth ", isAuthenticated)
+  console.log("pathname  ", pathname)
+
+  if (!isAuthenticated || isAuthenticated === undefined) {
     const loginUrl = new URL("/login", req.url);
-    if (!pathname.startsWith("/login")) {
+    if (!pathname.includes("/login")) {
       return NextResponse.redirect(loginUrl);
-    } else {
-      return NextResponse.next();
     }
   }
 
   if (isAuthenticated) {
     const homeUrl = new URL("/", req.url);
-    if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
+    if (pathname.includes("/login") || pathname.includes("/register")) {
       return NextResponse.redirect(homeUrl);
-    } else {
-      return NextResponse.next();
     }
   }
 };

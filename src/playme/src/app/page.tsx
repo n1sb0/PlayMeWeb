@@ -2,19 +2,17 @@ import { cookies } from 'next/headers';
 import { decode } from "next-auth/jwt";
 import { getUserByEmail } from "../components/Auth/AuthHelper";
 import UserCard from '../components/Features/User/UserCard';
-import { getSession } from 'next-auth/react'
 
 
 const getUserSessionData = async () =>{
   const nextCookies = cookies();
-  const rawToken = nextCookies.get('next-auth.session-token')?.value;
+  const rawToken = nextCookies.get("next-auth.session-token")?.value ?? nextCookies.get("__Secure-next-auth.session-token")?.value;
   console.log('session Home Page raw',rawToken)
-  const session = await decode({
+  return await decode({
     token: rawToken as unknown as string,
     secret: process.env.JWT_SECRET as string,
   });
 
-  return session;
 }
 
 async function getUserByEmailFromSession() {
@@ -23,13 +21,13 @@ async function getUserByEmailFromSession() {
 
   let user : any;
 
-  const userEmailFormSession = session?.user !== undefined && session.user.email ? session.user.email : session?.email;
+  const userEmailFormSession = session?.email;
 
   if(userEmailFormSession){
     user = await getUserByEmail(userEmailFormSession);
   }
 
-  return user as any;
+  return user;
 }
 
 export default async function HomePage() {
