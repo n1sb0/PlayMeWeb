@@ -1,6 +1,6 @@
 import { signOut, useSession } from "next-auth/react";
 import React from "react";
-import { FaHome, FaSignOutAlt, FaUserFriends } from "react-icons/fa";
+import { FaBomb, FaHome, FaSignOutAlt, FaUserFriends } from "react-icons/fa";
 import Divider from "../Features/Basic/Divider";
 
 const SideBar = () => {
@@ -15,7 +15,7 @@ const SideBar = () => {
   );
 };
 
-const SideBarIcon = ({ icon, text = "tooltip 💡", link = "/" }) => (
+const SideBarIcon = ({ icon = <FaBomb size="28" />, text = "tooltip 💡", link = "/" }) => (
   <a className="sidebar-icon group" href={link}>
     {icon}
     <span className="sidebar-tooltip group-hover:scale-100">{text}</span>

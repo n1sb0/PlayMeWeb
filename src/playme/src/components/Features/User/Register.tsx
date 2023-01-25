@@ -10,8 +10,6 @@ import { createNewUser } from "../../Auth/AuthHelper";
 
 
 export default function CreateUser() {
-  let password: string;
-  let email: string;
   const [unTakenEmail, setUnTakenEmail] = useState(true);
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
@@ -43,21 +41,21 @@ export default function CreateUser() {
     resolver: yupResolver(formSchema),
   });
 
-  password = watch("password", "");
-  email = watch("email", "");
+  const password = watch("password", "");
+  const email = watch("email", "");
 
   //Submit
-  const submitUser = async (event) => {
+  const submitUser = async (event : any) => {
     event.preventDefault();
 
     const hashed_password = password;
     const user = {name, lastname, email, hashed_password};
     const result = await createNewUser(user);
 
-    if (result.ok)
+    if (result?.ok)
     router.push("/");
 
-    setUnTakenEmail(result.ok);
+    setUnTakenEmail(result?.ok ?? false);
   };
 
   //Error Email Message

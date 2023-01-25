@@ -34,16 +34,16 @@ export const authOptions: NextAuthOptions = {
 
       if (account?.provider === "google") {
         //create new user account if not exist
-        createUserFromProvider(profile);
+        await createUserFromProvider(profile);
       }
       
       return true // do other things for other providers
     },
-    async jwt({token, user, account, profile, isNewUser}) {
+    jwt({token, user, account, profile, isNewUser}) {
       //just return already created token
       return token
     },
-    async session({session, token, user}) {    
+    session({session, token, user}) {    
       //just return already created session
       return session
     }

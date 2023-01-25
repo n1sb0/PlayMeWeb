@@ -8,7 +8,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleCredentialsSubmit = async (e) =>{
+  const handleCredentialsSubmit = async (e : any) =>{
     e.preventDefault();
 
     const res = await signIn('credentials', {
@@ -17,7 +17,7 @@ export default function Login() {
     })
   }
 
-  const handleGooglesSubmit = async (e) =>{
+  const handleGooglesSubmit = async (e : any) =>{
     e.preventDefault();
 
     const res = await signIn('google')
