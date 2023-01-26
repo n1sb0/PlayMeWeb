@@ -13,23 +13,23 @@ const SideBar = () => {
   const { data: session, status } = useSession();
   const [showMenu, setShowMenu] = useState(false);
 
-
-
   if (!showMenu) {
     return (
       <>
-        <div className="fixed top-0 left-0 mr-4 h-screen w-16 overflow-hidden">
+      <div className="fixed h-16 w-screen">
+        <div className="absolute left-2 top-0">
           <button
-            className="block rounded-full p-2 text-white hover:scale-100"
+            className="hover:scale-100"
             onClick={() => setShowMenu(!showMenu)}
           >
-            <a className="sidebar-icon group">
-              <FaBars size="20" />
-              <span className="sidebar-tooltip group-hover:scale-100">
-                Show/Hide
-              </span>
-            </a>
+            <SideBarIcon
+              icon={<FaBars size="20" />}
+              text={"Sign Out"}
+              newIconClass="sidebar-icon-menu"
+              link="#"
+            />
           </button>
+        </div>
         </div>
       </>
     );
@@ -38,21 +38,21 @@ const SideBar = () => {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 mr-4 h-screen w-16 bg-gray-900 text-white shadow-lg overflow-hidden ${
+        className={`fixed top-0 left-0 mr-4 h-screen w-16 overflow-hidden bg-gray-900 text-white shadow-lg ${
           showMenu ? "block" : "hidden sm:block"
         }`}
       >
-        <nav className="flex h-full flex-col items-center">
+        <nav className="flex h-full flex-col items-center read-only:scale-100">
           <button
-            className="block rounded-full p-2 text-white hover:scale-100"
+            className="block rounded-full text-white hover:scale-100"
             onClick={() => setShowMenu(!showMenu)}
           >
-            <a className="sidebar-icon group">
-              <FaBars size="20" />
-              <span className="sidebar-tooltip group-hover:scale-100">
-                Show/Hide
-              </span>
-            </a>
+            <SideBarIcon
+              icon={<FaBars size="20" />}
+              text={"Sign Out"}
+              newIconClass="sidebar-icon-menu"
+              link="#"
+            />
           </button>
           <Divider />
           <SideBarIcon icon={<FaHome size="28" />} text={"Home"} link={"/"} />
@@ -82,8 +82,9 @@ const SideBarIcon = ({
   icon = <FaBomb size="28" />,
   text = "tooltip 💡",
   link = "/",
+  newIconClass = "sidebar-icon",
 }) => (
-  <a className="sidebar-icon group" href={link}>
+  <a className={`${newIconClass} group`} href={link}>
     {icon}
     <span className="sidebar-tooltip group-hover:scale-100">{text}</span>
   </a>

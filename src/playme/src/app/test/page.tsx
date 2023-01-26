@@ -1,8 +1,8 @@
 const Test = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center">
+    <>
         <div className="relative flex flex-col items-center">
-            <div className="relative w-full">
+          <div className="relative w-full">
             <img
               className="w-full object-cover object-center lg:h-48"
               src="main-banner.jpg"
@@ -56,8 +56,8 @@ const Test = () => {
               </div>
             </div>
           </div>
-      </div>
-    </div>
+        </div>
+    </>
   );
 };
 

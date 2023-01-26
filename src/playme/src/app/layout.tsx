@@ -19,7 +19,7 @@ export default function RootLayout({
               <ProvidersWrapper>
                 <SideBar />
                 <div className="flex min-h-screen flex-col items-center">
-                    {children}
+                  {children}
                 </div>
               </ProvidersWrapper>
             </div>
