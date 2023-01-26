@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { createNewUser } from "../../Auth/AuthHelper";
+import { createNewUser } from "./AuthHelper";
 
 
 

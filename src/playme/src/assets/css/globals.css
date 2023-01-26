@@ -38,7 +38,7 @@
 }
 
 .content-container {
-  @apply m-0 ml-16 overflow-hidden bg-gray-200
+  @apply m-0 ml-16 overflow-auto bg-gray-200
      dark:bg-gray-800;
 }
 
