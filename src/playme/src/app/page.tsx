@@ -7,7 +7,7 @@ import UserCard from '../components/Features/User/UserCard';
 const getUserSessionData = async () =>{
   const nextCookies = cookies();
   const rawToken = nextCookies.get("next-auth.session-token")?.value ?? nextCookies.get("__Secure-next-auth.session-token")?.value;
-  console.log('session Home Page raw',rawToken)
+  
   return await decode({
     token: rawToken as unknown as string,
     secret: process.env.JWT_SECRET as string,

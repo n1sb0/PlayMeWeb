@@ -5,6 +5,7 @@ import {
   FaBomb,
   FaHome,
   FaSignOutAlt,
+  FaToolbox,
   FaUserFriends,
 } from "react-icons/fa";
 import Divider from "../Features/Basic/Divider";
@@ -57,11 +58,9 @@ const SideBar = () => {
           <Divider />
           <SideBarIcon icon={<FaHome size="28" />} text={"Home"} link={"/"} />
           <Divider />
-          <SideBarIcon
-            icon={<FaUserFriends size="20" />}
-            text={"Users"}
-            link={"/users"}
-          />
+          <SideBarIcon icon={<FaUserFriends size="20" />} text={"Users"} link={"/users"} />
+          <SideBarIcon icon={<FaToolbox size="20" />} text={"Test"} link={"/test"} />
+
           {status === "authenticated" ? (
             <button type="button" onClick={() => signOut()}>
               <SideBarIcon

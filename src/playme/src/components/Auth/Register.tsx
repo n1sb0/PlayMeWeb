@@ -67,6 +67,7 @@ export default function CreateUser() {
   }
 
   return (
+    <div className="">
     <section>
       <div className="section-form-div">
         <a href="/" className="form-title-with-image">
@@ -77,7 +78,7 @@ export default function CreateUser() {
           />
           PlayMe
         </a>
-        <div className="form-container form-width-fifty">
+        <div className="form-container">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
             <h1 className="form-title">Create and account</h1>
             <form className="form-spaces">
@@ -183,5 +184,6 @@ export default function CreateUser() {
         </div>
       </div>
     </section>
+    </div>
   );
 }
