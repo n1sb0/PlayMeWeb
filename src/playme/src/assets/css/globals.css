@@ -67,10 +67,6 @@
     @apply mr-2 mb-2 w-full rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800;
   }
 
-  .form-width-fifty {
-    min-width: 50vh;
-  }
-
   .lable-text-form {
     @apply mb-2 block text-start font-medium text-gray-900 dark:text-white;
   }
@@ -84,7 +80,7 @@
   }
 
   .form-container {
-    @apply rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0;
+    @apply rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-0 xl:p-0 sm:min-w-[300px] md:min-w-[400px] lg:min-w-[450px];
   }
 
   .form-title {
@@ -100,7 +96,7 @@
   }
 
   .section-form-div {
-    @apply mx-auto flex w-screen flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0;
+    @apply flex flex-col items-center justify-center px-6 py-8  ;
   }
 
   .form-spaces {

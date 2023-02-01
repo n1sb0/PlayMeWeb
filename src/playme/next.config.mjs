@@ -13,6 +13,6 @@ const config = {
   //   locales: ["en"],
   //   defaultLocale: "en",
   // },
-  experimental:{appDir: true, enableUndici: true},
+  experimental:{appDir: true},
 };
 export default config;

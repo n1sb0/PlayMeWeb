@@ -18,7 +18,7 @@ export default function RootLayout({
             <div className=" text-gray-200 dark:bg-slate-800 dark:text-gray-200 sm:text-center">
               <ProvidersWrapper>
                 <SideBar />
-                <div className="flex min-h-screen flex-col items-center">
+                <div className="flex min-h-screen items-center justify-center">
                   {children}
                 </div>
               </ProvidersWrapper>

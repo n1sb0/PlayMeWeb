@@ -1,7 +1,7 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import React from "react";
+import { signIn, useSession } from "next-auth/react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 export default function Login() {
@@ -20,12 +20,12 @@ export default function Login() {
   const handleGooglesSubmit = async (e: any) => {
     e.preventDefault();
 
-    const res = await signIn("google");
+    const res = await signIn('google');
   };
 
   return (
     <>
-
+    <div className="" >
         <section>
         <div className="section-form-div">
           <img
@@ -34,7 +34,7 @@ export default function Login() {
             alt="logo"
           />
           <a className="form-title-with-image">Sign in to PlayMe</a>
-          <div className="form-container form-width-fifty">
+          <div className="form-container">
             <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
               <form
                 className="form-spaces"
@@ -94,6 +94,7 @@ export default function Login() {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }
