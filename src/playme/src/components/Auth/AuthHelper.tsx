@@ -39,7 +39,7 @@ const validatePassword = async (user : any, inputPassword : string) =>{
 }
 
 const getUserByEmail = async (email : string) => {
-  const apiUrl = process.env.BASE_API_URL + `Users/GetUserByEmail/${email}`;
+  const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL_AZURE + `Users/GetUserByEmail/${email}`;
   const result = await fetch(apiUrl, { cache: "no-store" });
   
   const user = await result.json();
@@ -50,7 +50,7 @@ const createNewUser = async (user: any) => {
   const salt = (await getSalt()).toString();
   const hashed_password = await getHashedPassword(user.hashed_password, salt);
 
-  const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL + "Users/CreateUser";
+  const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL_AZURE + "Users/CreateUser";
   const result = await fetch(apiUrl, {
     method: "POST",
     mode: "cors",
@@ -68,7 +68,6 @@ const createNewUser = async (user: any) => {
     console.log(err);
   });
 
-  console.log('reg result', result)
   return result;
 };
 

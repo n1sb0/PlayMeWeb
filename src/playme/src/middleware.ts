@@ -7,9 +7,6 @@ export const middleware = async (req: NextRequest) => {
 
   const pathname = nextUrl.pathname;
 
-  console.log("auth ", isAuthenticated)
-  console.log("pathname  ", pathname)
-
   if (!isAuthenticated || isAuthenticated === undefined) {
     const loginUrl = new URL("/login", req.url);
     if (!pathname.includes("/login")) {
@@ -26,5 +23,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|register).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|register|test).*)"],
 };
