@@ -1,7 +1,7 @@
 import UsersList from "../../components/Features/User/UsersList";
 
 const getUsers = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL_AZURE + "Users/GetUsers";
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL_AZURE}Users/GetUsers`;
   const result = await fetch(apiUrl, { cache: "no-store" });
 
   const data = await result.json();
