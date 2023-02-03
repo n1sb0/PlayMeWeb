@@ -7,8 +7,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { createNewUser } from "./AuthHelper";
 
-
-
 export default function CreateUser() {
   const [unTakenEmail, setUnTakenEmail] = useState(true);
   const [name, setName] = useState("");
@@ -18,13 +16,9 @@ export default function CreateUser() {
 
   const formSchema = Yup.object().shape({
     password: Yup.string()
-      .required("Password is required")
-      .min(4, "Password length should be at least 4 characters")
-      .max(12, "Password cannot exceed more than 12 characters"),
+      .required("Password is required"),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
-      .min(4, "Password length should be at least 4 characters")
-      .max(12, "Password cannot exceed more than 12 characters")
       .oneOf([Yup.ref("password")], "Passwords do not match"),
     email: Yup.string().email(),
   });

@@ -61,15 +61,13 @@ const SideBar = () => {
           <SideBarIcon icon={<FaUserFriends size="20" />} text={"Users"} link={"/users"} />
           <SideBarIcon icon={<FaToolbox size="20" />} text={"Test"} link={"/test"} />
 
-          {status === "authenticated" ? (
+          {status === "authenticated" && (
             <button type="button" onClick={() => signOut()}>
               <SideBarIcon
                 icon={<FaSignOutAlt size="20" />}
                 text={"Sign Out"}
               />
             </button>
-          ) : (
-            ""
           )}
         </nav>
       </div>
