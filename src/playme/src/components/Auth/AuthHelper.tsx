@@ -39,18 +39,17 @@ const validatePassword = async (user : any, inputPassword : string) =>{
 }
 
 const getUserByEmail = async (email : string) => {
-  const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL_AZURE + `Users/GetUserByEmail/${email}`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL_AZURE}Users/GetUserByEmail/${email}`;
   const result = await fetch(apiUrl, { cache: "no-store" });
-  
-  const user = await result.json();
-  return user as any;
+
+  return (result.status === 200)? await result.json() : null;
 };
 
 const createNewUser = async (user: any) => {
   const salt = (await getSalt()).toString();
   const hashed_password = await getHashedPassword(user.hashed_password, salt);
 
-  const apiUrl = process.env.NEXT_PUBLIC_BASE_API_URL_AZURE + "Users/CreateUser";
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL_AZURE}Users/CreateUser`;
   const result = await fetch(apiUrl, {
     method: "POST",
     mode: "cors",
@@ -74,9 +73,9 @@ const createNewUser = async (user: any) => {
 const createUserFromProvider = async (profile : any) =>{  
   const result = await getUserByEmail(profile.email);
 
-  if(result.status !== 200){
+  if (result == null){
     const salt = (await getSalt()).toString();
-
+    
     const user = {
       name: profile.given_name,
       email: profile.email,
@@ -84,7 +83,7 @@ const createUserFromProvider = async (profile : any) =>{
       hashed_password: salt,
       email_verified: profile.email_verified
     }
-    const result = await createNewUser(user)
+    await createNewUser(user);
   }
 }
 
